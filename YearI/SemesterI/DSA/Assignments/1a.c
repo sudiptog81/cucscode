@@ -15,7 +15,7 @@ struct Graph
   int matrix[MAX_DIM][MAX_DIM];
 };
 
-struct Graph *initGraph(int _n, int _m)
+struct Graph *initGraph(int _n)
 {
   struct Graph *graph = malloc(sizeof(struct Graph));
 
@@ -53,7 +53,7 @@ void printGraph(struct Graph *graph)
 // Driver Code
 int main(void)
 {
-  struct Graph *graph = initGraph(5, 8);
+  struct Graph *graph = initGraph(5);
   addEdge(graph, 0, 1);
   addEdge(graph, 0, 4);
   addEdge(graph, 1, 2);

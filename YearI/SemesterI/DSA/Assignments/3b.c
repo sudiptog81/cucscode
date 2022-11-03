@@ -31,6 +31,7 @@ struct Graph *initGraph(int _n)
   {
     graph->lists[i] = malloc(sizeof(struct Node));
     graph->lists[i]->v = 0;
+    graph->lists[i]->w = 1;
     graph->lists[i]->next = NULL;
   }
 

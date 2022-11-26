@@ -122,7 +122,7 @@ void DFSTree(struct Graph *graph, int v, struct Graph *tree)
 void DFSEdgeClassification(struct Graph *graph, int u)
 {
   graph->visited[u] = 1;
-  graph->start[u] = graph->clock;
+  graph->start[u] = graph->clock++;
   struct Node *node = graph->lists[u]->next;
   while (node != NULL)
   {
@@ -134,15 +134,25 @@ void DFSEdgeClassification(struct Graph *graph, int u)
     else
     {
       if (graph->start[node->v] < graph->start[u] && graph->end[node->v] < graph->end[u])
+      {
         printf("Cross Edge: (%i, %i)\n", u, node->v);
+        printf("^ from (%i, %i) to (%i, %i)\n", graph->start[u], graph->end[u], graph->start[node->v], graph->end[node->v]);
+      }
       else if (graph->start[node->v] < graph->start[u] && graph->end[node->v] > graph->end[u])
         printf("Back Edge: (%i, %i)\n", u, node->v);
       else if (graph->start[node->v] > graph->start[u] && graph->end[node->v] < graph->end[u])
         printf("Forward Edge: (%i, %i)\n", u, node->v);
     }
-    graph->end[u] = ++graph->clock;
+    graph->end[u] = graph->clock++;
     node = node->next;
   }
+}
+
+void printDFSNumbers(struct Graph *graph)
+{
+  printf("DFS Numbers:\n");
+  for (int i = 0; i < graph->n; i++)
+    printf("Node %i: DFS Number: %i, DFS Completion Number: %i\n", i, graph->start[i], graph->end[i]);
 }
 
 // Driver Code
@@ -170,6 +180,7 @@ int main(void)
 
   printf("Edge Classification: \n");
   DFSEdgeClassification(graph, 0);
+  printDFSNumbers(graph);
   resetGraphState(graph);
 
   destroyGraph(graph);
